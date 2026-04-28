@@ -1,0 +1,57 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, value):
+        if self.root is None:
+            self.root = Node(value)
+        else:
+            self._insert(self.root, value)
+
+    def _insert(self, current, value):
+        if value < current.value:
+            if current.left is None:
+                current.left = Node(value)
+            else:
+                self._insert(current.left, value)
+        else:
+            if current.right is None:
+                current.right = Node(value)
+            else:
+                self._insert(current.right, value)
+
+    def show(self, node, level=0):
+        if node is not None:
+            self.show(node.right, level + 1)
+            print("   " * level + str(node.value))
+            self.show(node.left, level + 1)
+
+
+tree = BinaryTree()
+
+while True:
+    print("\n1 Добавить число")
+    print("2 Показать дерево")
+    print("3 Выход")
+
+    choice = input("Выбери: ")
+
+    if choice == "1":
+        value = int(input("Введите число: "))
+        tree.insert(value)
+
+    elif choice == "2":
+        tree.show(tree.root)
+
+    elif choice == "3":
+        break
+
+    else:
+        print("Ошибка")
