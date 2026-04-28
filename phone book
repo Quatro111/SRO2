@@ -1,0 +1,95 @@
+class Node:
+    def __init__(self, name, phone):
+        self.name = name
+        self.phone = phone
+        self.next = None
+
+
+class PhoneBook:
+    def __init__(self):
+        self.head = None
+
+    def add(self, name, phone):
+        new_node = Node(name, phone)
+
+        if self.head is None:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+
+    def show(self):
+        current = self.head
+
+        if current is None:
+            print("Список пуст")
+            return
+
+        while current:
+            print(current.name, "-", current.phone)
+            current = current.next
+
+    def find(self, name):
+        current = self.head
+
+        while current:
+            if current.name == name:
+                print("Найден:", current.name, "-", current.phone)
+                return
+            current = current.next
+
+        print("Контакт не найден")
+
+    def delete(self, name):
+        current = self.head
+        prev = None
+
+        while current:
+            if current.name == name:
+                if prev is None:
+                    self.head = current.next
+                else:
+                    prev.next = current.next
+                print("Удалено")
+                return
+
+            prev = current
+            current = current.next
+
+        print("Контакт не найден")
+
+
+pb = PhoneBook()
+
+while True:
+    print("\n1 Добавить контакт")
+    print("2 Показать контакты")
+    print("3 Найти контакт")
+    print("4 Удалить контакт")
+    print("5 Выход")
+
+    choice = input("Выбери: ")
+
+    if choice == "1":
+        name = input("Имя: ")
+        phone = input("Телефон: ")
+        pb.add(name, phone)
+
+    elif choice == "2":
+        pb.show()
+
+    elif choice == "3":
+        name = input("Введите имя: ")
+        pb.find(name)
+
+    elif choice == "4":
+        name = input("Введите имя: ")
+        pb.delete(name)
+
+    elif choice == "5":
+        break
+
+    else:
+        print("Ошибка")
