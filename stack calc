@@ -1,0 +1,40 @@
+def calculate(expression):
+    stack = []
+    num = ""
+    last_op = "+"
+
+    for i in range(len(expression)):
+        ch = expression[i]
+
+        if ch.isdigit():
+            num += ch
+
+        if not ch.isdigit() or i == len(expression) - 1:
+            if num != "":
+                num = int(num)
+
+                if last_op == "+":
+                    stack.append(num)
+                elif last_op == "-":
+                    stack.append(-num)
+                elif last_op == "*":
+                    stack.append(stack.pop() * num)
+                elif last_op == "/":
+                    stack.append(int(stack.pop() / num))
+
+                num = ""
+
+            last_op = ch
+
+    return sum(stack)
+
+
+while True:
+    expr = input("Введите выражение (или выход): ")
+
+    if expr.lower() == "выход":
+        break
+
+    expr = expr.replace(" ", "")
+
+    print("Результат:", calculate(expr))
