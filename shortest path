@@ -1,0 +1,74 @@
+from collections import deque
+
+graph = {}
+
+def add_user(user):
+    if user not in graph:
+        graph[user] = []
+
+def add_edge(u1, u2):
+    add_user(u1)
+    add_user(u2)
+
+    if u2 not in graph[u1]:
+        graph[u1].append(u2)
+
+    if u1 not in graph[u2]:
+        graph[u2].append(u1)
+
+
+def shortest_path(start, end):
+    queue = deque()
+    queue.append([start])
+
+    visited = set()
+
+    while queue:
+        path = queue.popleft()
+        node = path[-1]
+
+        if node == end:
+            return path
+
+        if node not in visited:
+            visited.add(node)
+
+            for neighbor in graph[node]:
+                new_path = list(path)
+                new_path.append(neighbor)
+                queue.append(new_path)
+
+    return None
+
+
+while True:
+    print("\n1 Добавить связь")
+    print("2 Найти кратчайший путь")
+    print("3 Выход")
+
+    choice = input("Выбери: ")
+
+    if choice == "1":
+        u1 = input("Пользователь 1: ")
+        u2 = input("Пользователь 2: ")
+        add_edge(u1, u2)
+
+    elif choice == "2":
+        start = input("Старт: ")
+        end = input("Конец: ")
+
+        if start in graph and end in graph:
+            result = shortest_path(start, end)
+
+            if result:
+                print("Путь:", " -> ".join(result))
+            else:
+                print("Путь не найден")
+        else:
+            print("Нет таких пользователей")
+
+    elif choice == "3":
+        break
+
+    else:
+        print("Ошибка")
