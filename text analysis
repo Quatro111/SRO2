@@ -1,0 +1,22 @@
+text = input("Введите текст: ")
+
+words = text.lower().split()
+
+print("Количество слов:", len(words))
+
+unique = []
+repeats = []
+
+for word in words:
+    if word not in unique:
+        unique.append(word)
+    else:
+        if word not in repeats:
+            repeats.append(word)
+
+if len(repeats) == 0:
+    print("Повторяющихся слов нет")
+else:
+    print("Повторяющиеся слова:")
+    for w in repeats:
+        print(w)
