@@ -1,0 +1,46 @@
+graph = {}
+
+def add_user(user):
+    if user not in graph:
+        graph[user] = []
+
+def add_friend(user1, user2):
+    add_user(user1)
+    add_user(user2)
+
+    if user2 not in graph[user1]:
+        graph[user1].append(user2)
+
+    if user1 not in graph[user2]:
+        graph[user2].append(user1)
+
+def show():
+    for user in graph:
+        print(user, "->", graph[user])
+
+
+while True:
+    print("\n1 Добавить пользователя")
+    print("2 Добавить связь")
+    print("3 Показать граф")
+    print("4 Выход")
+
+    choice = input("Выбери: ")
+
+    if choice == "1":
+        user = input("Имя пользователя: ")
+        add_user(user)
+
+    elif choice == "2":
+        u1 = input("Пользователь 1: ")
+        u2 = input("Пользователь 2: ")
+        add_friend(u1, u2)
+
+    elif choice == "3":
+        show()
+
+    elif choice == "4":
+        break
+
+    else:
+        print("Ошибка")
