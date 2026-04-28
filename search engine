@@ -1,0 +1,76 @@
+from collections import deque
+
+graph = {}
+
+def add_page(page):
+    if page not in graph:
+        graph[page] = []
+
+def link(a, b):
+    add_page(a)
+    add_page(b)
+
+    if b not in graph[a]:
+        graph[a].append(b)
+
+
+def bfs_search(start, target):
+    queue = deque()
+    queue.append(start)
+
+    visited = set()
+
+    while queue:
+        page = queue.popleft()
+
+        if page == target:
+            return True
+
+        if page not in visited:
+            visited.add(page)
+
+            for link_page in graph[page]:
+                queue.append(link_page)
+
+    return False
+
+
+while True:
+    print("\n1 Добавить страницу")
+    print("2 Добавить ссылку")
+    print("3 Найти страницу")
+    print("4 Показать сайт")
+    print("5 Выход")
+
+    choice = input("Выбери: ")
+
+    if choice == "1":
+        page = input("Название страницы: ")
+        add_page(page)
+
+    elif choice == "2":
+        a = input("Страница откуда: ")
+        b = input("Страница куда: ")
+        link(a, b)
+
+    elif choice == "3":
+        start = input("Стартовая страница: ")
+        target = input("Что ищем: ")
+
+        if start in graph:
+            if bfs_search(start, target):
+                print("Страница найдена")
+            else:
+                print("Не найдена")
+        else:
+            print("Нет такой страницы")
+
+    elif choice == "4":
+        for page in graph:
+            print(page, "->", graph[page])
+
+    elif choice == "5":
+        break
+
+    else:
+        print("Ошибка")
