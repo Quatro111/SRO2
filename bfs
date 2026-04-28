@@ -1,0 +1,61 @@
+from collections import deque
+
+graph = {}
+
+def add_user(user):
+    if user not in graph:
+        graph[user] = []
+
+def add_edge(u1, u2):
+    add_user(u1)
+    add_user(u2)
+
+    if u2 not in graph[u1]:
+        graph[u1].append(u2)
+
+    if u1 not in graph[u2]:
+        graph[u2].append(u1)
+
+
+def bfs(start):
+    visited = set()
+    queue = deque()
+
+    visited.add(start)
+    queue.append(start)
+
+    while queue:
+        node = queue.popleft()
+        print(node, end=" ")
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+
+
+while True:
+    print("\n1 Добавить связь")
+    print("2 BFS обход")
+    print("3 Выход")
+
+    choice = input("Выбери: ")
+
+    if choice == "1":
+        u1 = input("Пользователь 1: ")
+        u2 = input("Пользователь 2: ")
+        add_edge(u1, u2)
+
+    elif choice == "2":
+        start = input("Стартовая вершина: ")
+        if start in graph:
+            bfs(start)
+            print()
+        else:
+            print("Нет такого пользователя")
+
+    elif choice == "3":
+        break
+
+    else:
+        print("Ошибка")
